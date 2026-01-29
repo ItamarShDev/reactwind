@@ -2,6 +2,7 @@
 
 [![Version](https://img.shields.io/npm/v/reactwind)](https://www.npmjs.com/package/reactwind)
 [![License](https://img.shields.io/npm/l/reactwind)](https://github.com/reactwind/reactwind/blob/main/LICENSE)
+[![Demo](https://img.shields.io/badge/storybook-demo-FF4785?logo=storybook)](https://itamarsharify.github.io/reactwind/storybook/index.html)
 
 **ReactWind** is a JSX runtime wrapper that brings the power of Tailwind CSS shorthands and array-based classNames directly to your React components. No more template literal spaghetti or complex utility merges.
 
