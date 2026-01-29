@@ -6,6 +6,10 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -37,6 +41,8 @@ jobs:
       - name: Test
         run: bun run test
 
-      - name: Publish to NPM
-        if: github.ref == 'refs/heads/main'
-        run: npm publish --provenance --access public
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm publish --provenance --access public
