@@ -12,16 +12,16 @@
     "css-in-js",
     "shorthand"
   ],
-  "homepage": "https://itamarshdev.github.io/reactwind/storybook/",
+  "homepage": "https://ItamarShDev.github.io/reactwind/storybook/",
   "bugs": {
-    "url": "https://github.com/itamarshdev/reactwind/issues"
+    "url": "https://github.com/ItamarShDev/reactwind/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/itamarshdev/reactwind.git"
+    "url": "https://github.com/ItamarShDev/reactwind.git"
   },
   "license": "MIT",
-  "author": "itamarshdev",
+  "author": "ItamarShDev",
   "type": "module",
   "exports": {
     ".": {

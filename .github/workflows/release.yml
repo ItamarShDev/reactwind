@@ -16,14 +16,34 @@ concurrency:
 
 jobs:
   release:
+    name: Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # CRITICAL: Fixes 'EGITNOPERMISSION' (pushes tags)
+      issues: write   # Fixes commenting on issues
+      pull-requests: write # Fixes commenting on PRs
+      id-token: write # Required if you use provenance (optional)
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          node-version: 'lts/*'
-      - run: npm install
-      - run: npx semantic-release
+          fetch-depth: 0 # Required for semantic-release to calculate version
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install Dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Run Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: bun run semantic-release
