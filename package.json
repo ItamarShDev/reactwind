@@ -1,6 +1,6 @@
 {
   "name": "@itamarshdev/reactwind",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "JSX runtime wrapper that adds a classNames prop to React elements.",
   "keywords": [
     "react",
