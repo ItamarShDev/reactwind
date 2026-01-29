@@ -1,0 +1,125 @@
+import { T as TailwindColor, a as TailwindSpacing, b as TailwindRadius, c as TailwindShadow, d as TailwindClass } from './tailwind.types-BSQudz76.cjs';
+
+interface ValueProps {
+    bg?: TailwindColor | string;
+    text?: TailwindColor | string;
+    border?: TailwindColor | string | boolean;
+    fill?: TailwindColor | string;
+    stroke?: TailwindColor | string;
+    font?: string;
+    p?: TailwindSpacing | string | number;
+    m?: TailwindSpacing | string | number;
+    px?: TailwindSpacing | string | number;
+    py?: TailwindSpacing | string | number;
+    mx?: TailwindSpacing | string | number;
+    my?: TailwindSpacing | string | number;
+    gap?: TailwindSpacing | string | number;
+    w?: TailwindSpacing | string | number;
+    h?: TailwindSpacing | string | number;
+    rounded?: TailwindRadius | string | boolean;
+    shadow?: TailwindShadow | boolean | string;
+    z?: TailwindSpacing | string | number;
+    mb?: TailwindSpacing | string | number;
+    mt?: TailwindSpacing | string | number;
+    ml?: TailwindSpacing | string | number;
+    mr?: TailwindSpacing | string | number;
+    pb?: TailwindSpacing | string | number;
+    pt?: TailwindSpacing | string | number;
+    pl?: TailwindSpacing | string | number;
+    pr?: TailwindSpacing | string | number;
+    "min-w"?: TailwindSpacing | string | number;
+    "max-w"?: TailwindSpacing | string | number;
+    "min-h"?: TailwindSpacing | string | number;
+    "max-h"?: TailwindSpacing | string | number;
+    overflow?: string;
+    tracking?: string;
+    leading?: string;
+    decoration?: string;
+    align?: string;
+    whitespace?: string;
+    break?: string;
+    content?: string;
+    opacity?: string;
+    "bg-opacity"?: string;
+    ring?: string;
+    "ring-offset"?: string;
+    outline?: string;
+    divide?: string;
+    "mix-blend"?: string;
+    "backdrop-blur"?: string;
+    blur?: string;
+    brightness?: string;
+    contrast?: string;
+    grayscale?: string;
+    "hue-rotate"?: string;
+    invert?: string;
+    saturate?: string;
+    sepia?: string;
+    "drop-shadow"?: string;
+    transition?: string | boolean;
+    duration?: string;
+    ease?: string;
+    delay?: string;
+    animate?: string;
+    cursor?: string;
+    "pointer-events"?: string;
+    resize?: string;
+    select?: string;
+    scale?: string;
+    rotate?: string;
+    translate?: string;
+    skew?: string;
+    origin?: string;
+}
+interface LayoutProps {
+    flex?: boolean;
+    grid?: boolean;
+    hidden?: boolean;
+    block?: boolean;
+    inline?: boolean;
+    "inline-block"?: boolean;
+    "inline-flex"?: boolean;
+    "inline-grid"?: boolean;
+    relative?: boolean;
+    absolute?: boolean;
+    fixed?: boolean;
+    sticky?: boolean;
+    static?: boolean;
+    "flex-row"?: boolean;
+    "flex-col"?: boolean;
+    "flex-wrap"?: boolean;
+    "flex-nowrap"?: boolean;
+    "items-center"?: boolean;
+    "items-start"?: boolean;
+    "items-end"?: boolean;
+    "justify-center"?: boolean;
+    "justify-between"?: boolean;
+    "justify-start"?: boolean;
+    "justify-end"?: boolean;
+    grow?: boolean;
+    shrink?: boolean;
+    italic?: boolean;
+    "not-italic"?: boolean;
+    underline?: boolean;
+    uppercase?: boolean;
+    lowercase?: boolean;
+    capitalize?: boolean;
+    truncate?: boolean;
+    visible?: boolean;
+    invisible?: boolean;
+    collapse?: boolean;
+    "pointer-events-none"?: boolean;
+    "pointer-events-auto"?: boolean;
+    "sr-only"?: boolean;
+    "not-sr-only"?: boolean;
+}
+declare module "react" {
+    interface HTMLAttributes<T> extends LayoutProps, ValueProps {
+        classNames?: (TailwindClass | string)[];
+        [key: string]: any;
+    }
+    interface SVGAttributes<T> extends LayoutProps, ValueProps {
+        classNames?: (TailwindClass | string)[];
+        [key: string]: any;
+    }
+}

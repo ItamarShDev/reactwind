@@ -1,6 +1,5 @@
-type ClassNamesProp = (string | undefined)[];
-
-const LAYOUT_PROPS = [
+// src/runtime.ts
+var LAYOUT_PROPS = [
   "flex",
   "grid",
   "hidden",
@@ -40,10 +39,9 @@ const LAYOUT_PROPS = [
   "pointer-events-none",
   "pointer-events-auto",
   "sr-only",
-  "not-sr-only",
+  "not-sr-only"
 ];
-
-const VALUE_PROPS_MAP: Record<string, string> = {
+var VALUE_PROPS_MAP = {
   bg: "bg",
   text: "text",
   border: "border",
@@ -89,7 +87,6 @@ const VALUE_PROPS_MAP: Record<string, string> = {
   "order": "order",
   overflow: "overflow",
   decoration: "decoration",
-
   whitespace: "whitespace",
   break: "break",
   content: "content",
@@ -125,10 +122,9 @@ const VALUE_PROPS_MAP: Record<string, string> = {
   rotate: "rotate",
   translate: "translate",
   skew: "skew",
-  origin: "origin",
+  origin: "origin"
 };
-
-const MODIFIERS = [
+var MODIFIERS = [
   "hover",
   "focus",
   "active",
@@ -160,72 +156,46 @@ const MODIFIERS = [
   "autofill",
   "read-only",
   "open",
-
   // Responsive breakpoints
   "sm",
   "md",
   "lg",
   "xl",
   "2xl",
-
   // Dark mode
   "dark",
-
   // Print
-  "print",
+  "print"
 ];
-
-const joinClassNames = (classNames: ClassNamesProp): string => {
+var joinClassNames = (classNames) => {
   if (!classNames || classNames.length === 0) {
     return "";
   }
-
   return classNames.filter(Boolean).join(" ");
 };
-
-export const withClassNames = <T extends Record<string, unknown> | null>(props: T): any => {
+var withClassNames = (props) => {
   if (!props) {
     return props;
   }
-  // Debug log to verify runtime is active
-  // console.log("ReactWind Runtime Active", Object.keys(props));
-
   const hasClassNames = "classNames" in props;
   const hasLayoutProps = LAYOUT_PROPS.some((k) => k in props);
   const hasValueProps = Object.keys(VALUE_PROPS_MAP).some((k) => k in props);
-
-  // Quick check for modifiers (starts with one of the modifiers + "-")
-  // This is an optimization to avoid iterating if we know there are no modifiers,
-  // but it might be expensive to check every key against every modifier. 
-  // Instead, we'll iterate keys once below.
   const propsKeys = Object.keys(props);
-  const hasModifiers = propsKeys.some(key => {
-    // Check if key starts with a known modifier followed by a dash
-    return MODIFIERS.some(mod => key.startsWith(`${mod}-`));
+  const hasModifiers = propsKeys.some((key) => {
+    return MODIFIERS.some((mod) => key.startsWith(`${mod}-`));
   });
-
   if (!hasClassNames && !hasLayoutProps && !hasValueProps && !hasModifiers) {
     return props;
   }
-
-  const { classNames, className, ...rest } = props as {
-    classNames?: ClassNamesProp;
-    className?: string;
-    [key: string]: unknown;
-  };
-
-  const generatedClasses: string[] = [];
+  const { classNames, className, ...rest } = props;
+  const generatedClasses = [];
   const cleanRest = { ...rest };
-
-  // 1. Handle Layout Props (boolean flags)
   for (const prop of LAYOUT_PROPS) {
     if (prop in cleanRest && cleanRest[prop] === true) {
       generatedClasses.push(prop);
       delete cleanRest[prop];
     }
   }
-
-  // 2. Handle Value Props (mapped props)
   for (const [prop, prefix] of Object.entries(VALUE_PROPS_MAP)) {
     if (prop in cleanRest) {
       const value = cleanRest[prop];
@@ -233,29 +203,18 @@ export const withClassNames = <T extends Record<string, unknown> | null>(props: 
         generatedClasses.push(`${prefix}-${value}`);
         delete cleanRest[prop];
       } else if (value === true && (prop === "shadow" || prop === "rounded" || prop === "border" || prop === "transition")) {
-        // Special handling for boolean values on props that are usually mapped values
-        // e.g. rounded={true} -> "rounded", border={true} -> "border"
-        // We check specific props where this makes sense in Tailwind
         generatedClasses.push(prop);
         delete cleanRest[prop];
       }
     }
   }
-
-  // 3. Handle Modifiers (e.g. hover-bg="red-500" -> hover:bg-red-500)
-  // We iterate over the remaining keys in cleanRest
-  Object.keys(cleanRest).forEach(key => {
-    // Find longest matching modifier to handle overlapping prefixes if any (though currently distinct)
-    // Actually simpler: split by first hyphen.
-    const firstHyphenIndex = key.indexOf('-');
+  Object.keys(cleanRest).forEach((key) => {
+    const firstHyphenIndex = key.indexOf("-");
     if (firstHyphenIndex === -1) return;
-
     const modifier = key.substring(0, firstHyphenIndex);
     if (MODIFIERS.includes(modifier)) {
       const restKey = key.substring(firstHyphenIndex + 1);
       const value = cleanRest[key];
-
-      // Check if the restKey is a known value prop (e.g. "bg" in "hover-bg")
       if (restKey in VALUE_PROPS_MAP) {
         const prefix = VALUE_PROPS_MAP[restKey];
         if (typeof value === "string" || typeof value === "number") {
@@ -265,9 +224,7 @@ export const withClassNames = <T extends Record<string, unknown> | null>(props: 
           generatedClasses.push(`${modifier}:${restKey}`);
           delete cleanRest[key];
         }
-      }
-      // Check if restKey is a layout prop (e.g. "flex" in "hover-flex")
-      else if (LAYOUT_PROPS.includes(restKey)) {
+      } else if (LAYOUT_PROPS.includes(restKey)) {
         if (value === true) {
           generatedClasses.push(`${modifier}:${restKey}`);
           delete cleanRest[key];
@@ -275,14 +232,14 @@ export const withClassNames = <T extends Record<string, unknown> | null>(props: 
       }
     }
   });
-
-
   const joined = joinClassNames(classNames || []);
   const merged = [className, ...generatedClasses, joined].filter(Boolean).join(" ");
-
   return {
     ...cleanRest,
-    ...(merged ? { className: merged } : {}),
-  } as T;
+    ...merged ? { className: merged } : {}
+  };
 };
 
+export {
+  withClassNames
+};
