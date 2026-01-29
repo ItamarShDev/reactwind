@@ -18,15 +18,6 @@
 
 ---
 
-## 🚀 Installation
-
-```bash
-bun add reactwind
-# or
-npm install reactwind
-```
-
----
 
 ## 🛠 Setup
 
