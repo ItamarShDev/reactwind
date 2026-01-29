@@ -35,7 +35,9 @@ jobs:
         run: ./scripts/generate-api-docs.sh
 
       - name: Build Storybook
-        run: bun run build-storybook -o docs/storybook -- --base /reactwind/storybook/
+        env:
+          STORYBOOK_BASE_PATH: /reactwind/storybook/
+        run: bun run build-storybook -o docs/storybook
 
 
       - name: Setup Pages

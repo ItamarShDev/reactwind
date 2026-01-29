@@ -18,6 +18,7 @@ const config: StorybookConfig = {
         const { default: tailwindcss } = await import("@tailwindcss/vite");
 
         return mergeConfig(config, {
+            base: process.env.STORYBOOK_BASE_PATH || config.base,
             plugins: [tailwindcss()],
             esbuild: {
                 jsxImportSource: "reactwind",
