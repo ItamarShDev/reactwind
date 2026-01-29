@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "buildCommand": "bun run build-storybook",
+  "outputDirectory": "storybook-static",
+  "framework": null
+}
