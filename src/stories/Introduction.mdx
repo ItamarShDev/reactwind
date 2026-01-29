@@ -1,0 +1,75 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+
+<Meta title="Introduction" />
+
+# 🚀 ReactWind
+
+### **Tailwind CSS Shorthands & Array-based ClassNames for React**
+
+ReactWind is a tiny, zero-runtime JSX wrapper that makes styling React components faster and more organized. It allows you to use Tailwind shorthands as props and pass classNames as clean arrays.
+
+---
+
+## ✨ Key Features
+
+- 📦 **Array-based ClassNames**: No more template literals or `clsx`/`tailwind-merge` boilerplate.
+- ⚡ **Tailwind Shorthands**: Use `flex`, `grid`, `bg="blue-500"`, `p={4}` directly as props.
+- 🚀 **Zero Runtime Overhead**: Compiles away or performs trivial merges at runtime.
+- 🛠 **Fully Typed**: Built with TypeScript for excellent IDE autocompletion.
+
+---
+
+## 🛠 Installation
+
+```bash
+bun add reactwind
+```
+
+## 🚀 Quick Start
+
+Configure your `vite.config.ts` or `tsconfig.json` to use `reactwind` as your JSX import source:
+
+```typescript
+// vite.config.ts
+export default defineConfig({
+  esbuild: {
+    jsxImportSource: 'reactwind',
+  },
+});
+```
+
+Now you can use ReactWind props on any HTML element:
+
+```tsx
+export const SimpleCard = () => (
+  <div 
+    bg="white" 
+    shadow 
+    rounded="lg" 
+    p={6} 
+    flex 
+    flex-col 
+    items-center
+    classNames={['hover:shadow-xl', 'transition-shadow']}
+  >
+    <h2 text="xl" font="bold" mb={2}>Hello ReactWind</h2>
+    <p text="gray-600">Pure Tailwind power, zero boilerplate.</p>
+  </div>
+);
+```
+
+---
+
+## 🎯 Goals
+
+1. **Reduce Boilerplate**: Stop writing `className={"..."}` with complex string interpolation.
+
+2. **Improve Readability**: Separate logic from styling while keeping them in the same file.
+3. **Type Safety**: Provide types for Tailwind's vast utility class set.
+
+---
+
+## 📖 Explore the Stories
+
+Check out the sidebar to see ReactWind in action with real-world layouts and components!
