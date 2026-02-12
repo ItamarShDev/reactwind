@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/ItamarShDev/reactwind/compare/v1.0.0...v1.1.0) (2026-02-12)
+
+
+### Features
+
+* Expand Tailwind property support, introduce object-based modifier syntax, and add a new coverage test file. ([52292a6](https://github.com/ItamarShDev/reactwind/commit/52292a665e63b0ebcdb434a522241d334ee3e931))
+
 # 1.0.0 (2026-01-29)
 
 
