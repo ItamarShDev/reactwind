@@ -55,7 +55,7 @@
     "prepublishOnly": "bun run build && bun run test",
     "test": "vitest run",
     "test:storybook": "vitest run --project storybook",
-    "lint": "oxlint",
+    "lint": "oxlint --ignore-pattern 'dist/' --ignore-pattern 'storybook-static/'",
     "format": "oxfmt --write src",
     "check": "oxfmt --check src",
     "test:watch": "vitest",
