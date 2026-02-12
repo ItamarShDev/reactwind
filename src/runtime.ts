@@ -126,6 +126,78 @@ const VALUE_PROPS_MAP: Record<string, string> = {
   translate: "translate",
   skew: "skew",
   origin: "origin",
+
+  // Layout & Position
+  top: "top",
+  right: "right",
+  bottom: "bottom",
+  left: "left",
+  inset: "inset",
+  "inset-x": "inset-x",
+  "inset-y": "inset-y",
+  aspect: "aspect",
+  columns: "columns",
+  float: "float",
+  clear: "clear",
+
+  // Flexbox & Grid
+  basis: "basis",
+  "gap-x": "gap-x",
+  "gap-y": "gap-y",
+  "auto-cols": "auto-cols",
+  "auto-rows": "auto-rows",
+  "grid-flow": "grid-flow",
+  "space-x": "space-x",
+  "space-y": "space-y",
+  "justify-items": "justify-items",
+  "justify-self": "justify-self",
+
+  // Sizing
+  size: "size",
+
+  // Borders
+  "border-t": "border-t",
+  "border-r": "border-r",
+  "border-b": "border-b",
+  "border-l": "border-l",
+  "border-x": "border-x",
+  "border-y": "border-y",
+  "rounded-t": "rounded-t",
+  "rounded-r": "rounded-r",
+  "rounded-b": "rounded-b",
+  "rounded-l": "rounded-l",
+  "rounded-tl": "rounded-tl",
+  "rounded-tr": "rounded-tr",
+  "rounded-bl": "rounded-bl",
+  "rounded-br": "rounded-br",
+  "border-style": "border",
+
+  // Typography
+  "text-align": "text",
+  align: "align",
+  "line-clamp": "line-clamp",
+  list: "list",
+  indent: "indent",
+
+  // Backgrounds & Gradients
+  "bg-gradient": "bg-gradient",
+  from: "from",
+  via: "via",
+  to: "to",
+  "bg-size": "bg",
+  "bg-position": "bg",
+  "bg-repeat": "bg",
+
+  // Interactivity
+  scroll: "scroll",
+  snap: "snap",
+  touch: "touch",
+  "will-change": "will-change",
+  caret: "caret",
+  accent: "accent",
+
+  // SVG
+  "stroke-width": "stroke",
 };
 
 const MODIFIERS = [
@@ -175,12 +247,38 @@ const MODIFIERS = [
   "print",
 ];
 
+const BOOLEAN_VALUE_PROPS = ["shadow", "rounded", "border", "transition", "ring", "outline"];
+
 const joinClassNames = (classNames: ClassNamesProp): string => {
   if (!classNames || classNames.length === 0) {
     return "";
   }
 
   return classNames.filter(Boolean).join(" ");
+};
+
+const processModifierObject = (
+  modifier: string,
+  obj: Record<string, unknown>,
+  classes: string[]
+): void => {
+  for (const [key, value] of Object.entries(obj)) {
+    if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+      // Nested modifier: dark={{ hover: { bg: "slate-800" } }} → dark:hover:bg-slate-800
+      if (MODIFIERS.includes(key)) {
+        processModifierObject(`${modifier}:${key}`, value as Record<string, unknown>, classes);
+      }
+    } else if (key in VALUE_PROPS_MAP) {
+      const prefix = VALUE_PROPS_MAP[key];
+      if (typeof value === "string" || typeof value === "number") {
+        classes.push(`${modifier}:${prefix}-${value}`);
+      } else if (value === true && BOOLEAN_VALUE_PROPS.includes(key)) {
+        classes.push(`${modifier}:${key}`);
+      }
+    } else if (LAYOUT_PROPS.includes(key) && value === true) {
+      classes.push(`${modifier}:${key}`);
+    }
+  }
 };
 
 export const withClassNames = <T extends Record<string, unknown> | null>(props: T): any => {
@@ -194,15 +292,15 @@ export const withClassNames = <T extends Record<string, unknown> | null>(props: 
   const hasLayoutProps = LAYOUT_PROPS.some((k) => k in props);
   const hasValueProps = Object.keys(VALUE_PROPS_MAP).some((k) => k in props);
 
-  // Quick check for modifiers (starts with one of the modifiers + "-")
-  // This is an optimization to avoid iterating if we know there are no modifiers,
-  // but it might be expensive to check every key against every modifier. 
-  // Instead, we'll iterate keys once below.
+  // Quick check for modifiers (hyphenated like hover-bg or object like hover={{ bg: "red" }})
   const propsKeys = Object.keys(props);
-  const hasModifiers = propsKeys.some(key => {
-    // Check if key starts with a known modifier followed by a dash
+  const hasHyphenatedModifiers = propsKeys.some(key => {
     return MODIFIERS.some(mod => key.startsWith(`${mod}-`));
   });
+  const hasObjectModifiers = propsKeys.some(key => {
+    return MODIFIERS.includes(key) && typeof props[key] === "object" && props[key] !== null;
+  });
+  const hasModifiers = hasHyphenatedModifiers || hasObjectModifiers;
 
   if (!hasClassNames && !hasLayoutProps && !hasValueProps && !hasModifiers) {
     return props;
@@ -232,18 +330,25 @@ export const withClassNames = <T extends Record<string, unknown> | null>(props: 
       if (typeof value === "string" || typeof value === "number") {
         generatedClasses.push(`${prefix}-${value}`);
         delete cleanRest[prop];
-      } else if (value === true && (prop === "shadow" || prop === "rounded" || prop === "border" || prop === "transition")) {
-        // Special handling for boolean values on props that are usually mapped values
-        // e.g. rounded={true} -> "rounded", border={true} -> "border"
-        // We check specific props where this makes sense in Tailwind
+      } else if (value === true && BOOLEAN_VALUE_PROPS.includes(prop)) {
         generatedClasses.push(prop);
         delete cleanRest[prop];
       }
     }
   }
 
-  // 3. Handle Modifiers (e.g. hover-bg="red-500" -> hover:bg-red-500)
-  // We iterate over the remaining keys in cleanRest
+  // 3. Handle Object Modifiers (e.g. hover={{ bg: "red-500", text: "white" }})
+  for (const modifier of MODIFIERS) {
+    if (modifier in cleanRest) {
+      const value = cleanRest[modifier];
+      if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+        processModifierObject(modifier, value as Record<string, unknown>, generatedClasses);
+        delete cleanRest[modifier];
+      }
+    }
+  }
+
+  // 4. Handle Hyphenated Modifiers (e.g. hover-bg="red-500" -> hover:bg-red-500)
   Object.keys(cleanRest).forEach(key => {
     // Find longest matching modifier to handle overlapping prefixes if any (though currently distinct)
     // Actually simpler: split by first hyphen.
@@ -261,7 +366,7 @@ export const withClassNames = <T extends Record<string, unknown> | null>(props: 
         if (typeof value === "string" || typeof value === "number") {
           generatedClasses.push(`${modifier}:${prefix}-${value}`);
           delete cleanRest[key];
-        } else if (value === true && (restKey === "shadow" || restKey === "rounded" || restKey === "border")) {
+        } else if (value === true && BOOLEAN_VALUE_PROPS.includes(restKey)) {
           generatedClasses.push(`${modifier}:${restKey}`);
           delete cleanRest[key];
         }

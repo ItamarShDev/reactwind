@@ -86,6 +86,50 @@ export default defineConfig({
 </div>
 ```
 
+### 3. Modifier Props (Hover, Focus, Responsive, etc.)
+
+```tsx
+// Hyphenated syntax
+<button hover-bg="blue-700" hover-scale="105" focus-ring="2">
+  Hover Me
+</button>
+
+// Object syntax for multiple props per modifier
+<button hover={{ bg: "blue-700", scale: "105", shadow: "lg" }}>
+  Hover Me
+</button>
+
+// Stacked modifiers via nesting
+<div dark={{ hover: { bg: "slate-800", text: "white" } }}>
+  Dark mode hover styles
+</div>
+
+// Responsive breakpoints
+<div md={{ flex: true, gap: "4" }} lg={{ gap: "8" }}>
+  Responsive layout
+</div>
+```
+
+### 4. Position & Layout Props
+
+```tsx
+<div absolute top="0" right="0" inset-x="4">
+  Positioned element
+</div>
+
+<div grid grid-cols="3" gap-x="4" gap-y="2">
+  Grid with different gaps
+</div>
+```
+
+### 5. Gradient & Background Props
+
+```tsx
+<div bg-gradient="to-r" from="blue-500" via="purple-500" to="pink-500">
+  Gradient background
+</div>
+```
+
 ---
 
 ## 🎯 Goals
