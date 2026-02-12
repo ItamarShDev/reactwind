@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/ItamarShDev/reactwind/compare/v1.2.1...v1.2.2) (2026-02-12)
+
+
+### Bug Fixes
+
+* resolve all lint errors, ignore dist/ in oxlint ([18c08e3](https://github.com/ItamarShDev/reactwind/commit/18c08e3ae36985dc9a7c31028be7cfc622897b99))
+
 ## [1.2.1](https://github.com/ItamarShDev/reactwind/compare/v1.2.0...v1.2.1) (2026-02-12)
 
 
