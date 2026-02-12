@@ -1,15 +1,15 @@
-# 🚀 ReactWind
+# ReactWind
 
 [![Version](https://img.shields.io/npm/v/@itamarshdev/reactwind)](https://www.npmjs.com/package/@itamarshdev/reactwind)
 [![License](https://img.shields.io/npm/l/@itamarshdev/reactwind)](https://github.com/ItamarShDev/reactwind/blob/main/LICENSE)
 [![Demo](https://img.shields.io/badge/storybook-demo-FF4785?logo=storybook)](https://ItamarShDev.github.io/reactwind/storybook/)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![semantic-release](https://img.shields.io/badge/semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 **ReactWind** is a JSX runtime wrapper that brings the power of Tailwind CSS shorthands and array-based classNames directly to your React components. No more template literal spaghetti or complex utility merges.
 
 ---
 
-## 📦 Installation
+## Installation
 
 ```bash
 npm install @itamarshdev/reactwind
@@ -20,18 +20,18 @@ yarn add @itamarshdev/reactwind
 ```
 
 
-## ✨ Features
+## Features
 
-- 🎯 **Prop-based Styling**: Use Tailwind utilities as props: `<div flex bg="blue-500" p={4} />`.
-- 🧬 **Array ClassNames**: Pass classes as clean arrays: `classNames={['text-center', isActive && 'font-bold']}`.
-- 💨 **Zero Runtime (Concept)**: Designed for minimal overhead. Most transformations happen at the JSX level.
-- 📘 **TypeScript First**: Automatic types for nearly all Tailwind utilities.
-- 🔌 **Framework Agnostic**: Works with Vite, Next.js, and any stack supporting custom JSX runtimes.
+- **Prop-based Styling**: Use Tailwind utilities as props: `<div flex bg="blue-500" p={4} />`.
+- **Array ClassNames**: Pass classes as clean arrays: `classNames={['text-center', isActive && 'font-bold']}`.
+- **Zero Runtime (Concept)**: Designed for minimal overhead. Most transformations happen at the JSX level.
+- **TypeScript First**: Automatic types for nearly all Tailwind utilities.
+- **Framework Agnostic**: Works with Vite, Next.js, and any stack supporting custom JSX runtimes.
 
 ---
 
 
-## 🛠 Setup
+## Setup
 
 Configure your build tool to use `@itamarshdev/reactwind` as your JSX import source.
 
@@ -60,7 +60,7 @@ export default defineConfig({
 
 ---
 
-## 📖 Usage Examples
+## Usage Examples
 
 ### 1. Shorthand Props & Booleans
 
@@ -132,7 +132,7 @@ export default defineConfig({
 
 ---
 
-## 🎯 Goals
+## Goals
 
 ReactWind aims to improve the developer experience of styling with Tailwind CSS by:
 1. **Removing syntactic noise**: Replacing long `className` strings with structured props.
@@ -141,10 +141,10 @@ ReactWind aims to improve the developer experience of styling with Tailwind CSS 
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📄 License
+## License
 
 MIT © [ItamarShDev](https://github.com/ItamarShDev/reactwind)
