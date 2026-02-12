@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/ItamarShDev/reactwind/compare/v1.1.0...v1.2.0) (2026-02-12)
+
+
+### Features
+
+* add sx prop for composable style objects ([ea94b99](https://github.com/ItamarShDev/reactwind/commit/ea94b991ee3257238cf4f1ab253832d3f9291b62))
+
 # [1.1.0](https://github.com/ItamarShDev/reactwind/compare/v1.0.0...v1.1.0) (2026-02-12)
 
 
