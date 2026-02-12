@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/ItamarShDev/reactwind/compare/v1.2.0...v1.2.1) (2026-02-12)
+
+
+### Bug Fixes
+
+* resolve TS7053 in button.tsx, add quality gate to CI ([c9ca8d4](https://github.com/ItamarShDev/reactwind/commit/c9ca8d46106878104740e1c18a50a56dcc0f219d))
+
 # [1.2.0](https://github.com/ItamarShDev/reactwind/compare/v1.1.0...v1.2.0) (2026-02-12)
 
 
