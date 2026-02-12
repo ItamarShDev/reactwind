@@ -58,6 +58,57 @@ export default defineConfig({
 }
 ```
 
+### Next.js
+
+Next.js uses SWC which reads from your `tsconfig.json`:
+
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "jsx": "preserve",
+    "jsxImportSource": "@itamarshdev/reactwind"
+  }
+}
+```
+
+### TanStack Start
+
+TanStack Start uses Vinxi (built on Vite). Configure via `app.config.ts`:
+
+```typescript
+// app.config.ts
+import { defineConfig } from "@tanstack/react-start/config";
+
+export default defineConfig({
+  tsr: {
+    // your TanStack Router options
+  },
+  vite: {
+    esbuild: {
+      jsxImportSource: "@itamarshdev/reactwind",
+    },
+  },
+});
+```
+
+### React Router (v7)
+
+React Router v7 uses Vite. Add to your `vite.config.ts`:
+
+```typescript
+// vite.config.ts
+import { reactRouter } from "@react-router/dev/vite";
+import { defineConfig } from "vite";
+
+export default defineConfig({
+  plugins: [reactRouter()],
+  esbuild: {
+    jsxImportSource: "@itamarshdev/reactwind",
+  },
+});
+```
+
 ---
 
 ## Usage Examples
