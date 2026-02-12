@@ -1,5 +1,3 @@
-
-
 export type TailwindSpacing =
   | "0"
   | "1"

@@ -153,18 +153,55 @@ export interface ValueProps {
   indent?: TailwindSpacing | string | number;
 
   // Backgrounds & Gradients (new)
-  "bg-gradient"?: "to-t" | "to-tr" | "to-r" | "to-br" | "to-b" | "to-bl" | "to-l" | "to-tl" | string;
+  "bg-gradient"?:
+    | "to-t"
+    | "to-tr"
+    | "to-r"
+    | "to-br"
+    | "to-b"
+    | "to-bl"
+    | "to-l"
+    | "to-tl"
+    | string;
   from?: TailwindColor | string;
   via?: TailwindColor | string;
   to?: TailwindColor | string;
   "bg-size"?: "auto" | "cover" | "contain" | string;
-  "bg-position"?: "bottom" | "center" | "left" | "left-bottom" | "left-top" | "right" | "right-bottom" | "right-top" | "top" | string;
-  "bg-repeat"?: "repeat" | "no-repeat" | "repeat-x" | "repeat-y" | "repeat-round" | "repeat-space" | string;
+  "bg-position"?:
+    | "bottom"
+    | "center"
+    | "left"
+    | "left-bottom"
+    | "left-top"
+    | "right"
+    | "right-bottom"
+    | "right-top"
+    | "top"
+    | string;
+  "bg-repeat"?:
+    | "repeat"
+    | "no-repeat"
+    | "repeat-x"
+    | "repeat-y"
+    | "repeat-round"
+    | "repeat-space"
+    | string;
 
   // Interactivity (new)
   scroll?: "auto" | "smooth" | string;
   snap?: "start" | "end" | "center" | "align-none" | "normal" | "always" | string;
-  touch?: "auto" | "none" | "pan-x" | "pan-left" | "pan-right" | "pan-y" | "pan-up" | "pan-down" | "pinch-zoom" | "manipulation" | string;
+  touch?:
+    | "auto"
+    | "none"
+    | "pan-x"
+    | "pan-left"
+    | "pan-right"
+    | "pan-y"
+    | "pan-up"
+    | "pan-down"
+    | "pinch-zoom"
+    | "manipulation"
+    | string;
   "will-change"?: "auto" | "scroll" | "contents" | "transform" | string;
   caret?: TailwindColor | string;
   accent?: TailwindColor | string;
@@ -201,7 +238,6 @@ export interface LayoutProps {
   grow?: boolean;
   shrink?: boolean;
 
-
   italic?: boolean;
   "not-italic"?: boolean;
   underline?: boolean;
@@ -210,15 +246,12 @@ export interface LayoutProps {
   capitalize?: boolean;
   truncate?: boolean;
 
-
   visible?: boolean;
   invisible?: boolean;
   collapse?: boolean;
 
-
   "pointer-events-none"?: boolean;
   "pointer-events-auto"?: boolean;
-
 
   "sr-only"?: boolean;
   "not-sr-only"?: boolean;
@@ -281,7 +314,6 @@ export interface ModifierProps {
 export type SxProp = Partial<ValueProps & LayoutProps & ModifierProps>;
 
 declare module "react" {
-
   interface HTMLAttributes<T> extends LayoutProps, ValueProps, ModifierProps {
     classNames?: (TailwindClass | string)[];
     sx?: SxProp;

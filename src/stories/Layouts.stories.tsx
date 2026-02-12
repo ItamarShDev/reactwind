@@ -1,4 +1,3 @@
-
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
@@ -58,9 +57,7 @@ export const DashboardLayout: Story = {
 
           <main grow flex flex-col>
             <header bg="white" border="b" p="4" flex justify-between items-center shadow="sm">
-              <div classNames={["text-lg", "font-semibold"]}>
-                {activeItem} Overview
-              </div>
+              <div classNames={["text-lg", "font-semibold"]}>{activeItem} Overview</div>
               <div flex gap="4">
                 <button
                   bg="blue-600"
@@ -98,16 +95,40 @@ export const DashboardLayout: Story = {
                     <h2 text="lg" font="bold" mb="4">
                       Recent Activity
                     </h2>
-                    <div h="64" bg="gray-50" rounded flex items-center justify-center text="gray-400">
+                    <div
+                      h="64"
+                      bg="gray-50"
+                      rounded
+                      flex
+                      items-center
+                      justify-center
+                      text="gray-400"
+                    >
                       Chart Placeholder for {activeItem}
                     </div>
                   </div>
                 </>
               ) : (
-                <div bg="white" p="12" rounded="lg" shadow="sm" flex flex-col items-center justify-center border="gray-100">
-                  <div text="4xl" mb="4">📂</div>
-                  <h2 text="2xl" font="bold" mb="2">{activeItem} Content</h2>
-                  <p text="gray-500">This is a placeholder for the {activeItem.toLowerCase()} section.</p>
+                <div
+                  bg="white"
+                  p="12"
+                  rounded="lg"
+                  shadow="sm"
+                  flex
+                  flex-col
+                  items-center
+                  justify-center
+                  border="gray-100"
+                >
+                  <div text="4xl" mb="4">
+                    📂
+                  </div>
+                  <h2 text="2xl" font="bold" mb="2">
+                    {activeItem} Content
+                  </h2>
+                  <p text="gray-500">
+                    This is a placeholder for the {activeItem.toLowerCase()} section.
+                  </p>
                 </div>
               )}
             </div>
@@ -115,5 +136,5 @@ export const DashboardLayout: Story = {
         </div>
       </div>
     );
-  }
+  },
 };

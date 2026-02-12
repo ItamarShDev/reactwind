@@ -80,13 +80,13 @@ const VALUE_PROPS_MAP: Record<string, string> = {
   "col-span": "col-span",
   "row-span": "row-span",
   "grid-rows": "grid-rows",
-  "items": "items",
-  "justify": "justify",
-  "self": "self",
+  items: "items",
+  justify: "justify",
+  self: "self",
   "place-content": "place-content",
   "place-items": "place-items",
   "place-self": "place-self",
-  "order": "order",
+  order: "order",
   overflow: "overflow",
   decoration: "decoration",
 
@@ -260,7 +260,7 @@ const joinClassNames = (classNames: ClassNamesProp): string => {
 const processModifierObject = (
   modifier: string,
   obj: Record<string, unknown>,
-  classes: string[]
+  classes: string[],
 ): void => {
   for (const [key, value] of Object.entries(obj)) {
     if (typeof value === "object" && value !== null && !Array.isArray(value)) {
@@ -298,10 +298,10 @@ export const withClassNames = <T extends Record<string, unknown> | null>(props: 
 
   // Quick check for modifiers (hyphenated like hover-bg or object like hover={{ bg: "red" }})
   const propsKeys = Object.keys(props);
-  const hasHyphenatedModifiers = propsKeys.some(key => {
-    return MODIFIERS.some(mod => key.startsWith(`${mod}-`));
+  const hasHyphenatedModifiers = propsKeys.some((key) => {
+    return MODIFIERS.some((mod) => key.startsWith(`${mod}-`));
   });
-  const hasObjectModifiers = propsKeys.some(key => {
+  const hasObjectModifiers = propsKeys.some((key) => {
     return MODIFIERS.includes(key) && typeof props[key] === "object" && props[key] !== null;
   });
   const hasModifiers = hasHyphenatedModifiers || hasObjectModifiers;
@@ -353,10 +353,10 @@ export const withClassNames = <T extends Record<string, unknown> | null>(props: 
   }
 
   // 4. Handle Hyphenated Modifiers (e.g. hover-bg="red-500" -> hover:bg-red-500)
-  Object.keys(cleanRest).forEach(key => {
+  Object.keys(cleanRest).forEach((key) => {
     // Find longest matching modifier to handle overlapping prefixes if any (though currently distinct)
     // Actually simpler: split by first hyphen.
-    const firstHyphenIndex = key.indexOf('-');
+    const firstHyphenIndex = key.indexOf("-");
     if (firstHyphenIndex === -1) return;
 
     const modifier = key.substring(0, firstHyphenIndex);
@@ -385,7 +385,6 @@ export const withClassNames = <T extends Record<string, unknown> | null>(props: 
     }
   });
 
-
   const joined = joinClassNames(classNames || []);
   const merged = [className, ...generatedClasses, joined].filter(Boolean).join(" ");
 
@@ -394,4 +393,3 @@ export const withClassNames = <T extends Record<string, unknown> | null>(props: 
     ...(merged ? { className: merged } : {}),
   } as T;
 };
-

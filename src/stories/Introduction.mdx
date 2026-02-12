@@ -1,5 +1,4 @@
-import { Meta } from '@storybook/addon-docs/blocks';
-
+import { Meta } from "@storybook/addon-docs/blocks";
 
 <Meta title="Introduction" />
 
@@ -36,7 +35,7 @@ Configure your `vite.config.ts` or `tsconfig.json` to use `@itamarshdev/reactwin
 // vite.config.ts
 export default defineConfig({
   esbuild: {
-    jsxImportSource: '@itamarshdev/reactwind',
+    jsxImportSource: "@itamarshdev/reactwind",
   },
 });
 ```
@@ -45,17 +44,19 @@ Now you can use ReactWind props on any HTML element:
 
 ```tsx
 export const SimpleCard = () => (
-  <div 
-    bg="white" 
-    shadow 
-    rounded="lg" 
-    p={6} 
-    flex 
-    flex-col 
+  <div
+    bg="white"
+    shadow
+    rounded="lg"
+    p={6}
+    flex
+    flex-col
     items-center
-    classNames={['hover:shadow-xl', 'transition-shadow']}
+    classNames={["hover:shadow-xl", "transition-shadow"]}
   >
-    <h2 text="xl" font="bold" mb={2}>Hello ReactWind</h2>
+    <h2 text="xl" font="bold" mb={2}>
+      Hello ReactWind
+    </h2>
     <p text="gray-600">Pure Tailwind power, zero boilerplate.</p>
   </div>
 );
@@ -75,6 +76,7 @@ export const SimpleCard = () => (
 ## Explore the Stories
 
 Check out the sidebar to see ReactWind in action:
+
 - **Layouts**: Professional dashboard and landing page examples.
 - **Composition**: See how ReactWind enhances "Real" Shadcn components.
 - **Showcase**: A full overview of all supported Tailwind properties.

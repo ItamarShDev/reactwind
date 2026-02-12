@@ -1,4 +1,4 @@
-name: CI
+name: Tests
 
 on:
   push:
@@ -7,12 +7,12 @@ on:
     branches: ["main"]
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: tests-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  quality:
-    name: Lint & Type Check
+  test:
+    name: Unit Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,11 +26,5 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Lint
-        run: bun run lint
-
-      - name: Style Check
-        run: bun run check
-
-      - name: Type Check
-        run: bun tsc --noEmit
+      - name: Run Tests
+        run: bun run test

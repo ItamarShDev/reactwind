@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { withClassNames } from "../runtime";
 
-
 const Button = ({ className, classNames, label, ...props }: any) => {
   const finalProps = withClassNames({ className, classNames, ...props });
   return <button {...finalProps}>{label}</button>;
@@ -19,7 +18,7 @@ const meta = {
     grid: { control: "boolean" },
     "items-center": { control: "boolean" },
     "justify-center": { control: "boolean" },
-    "bg-blue-500": { control: "boolean" }, 
+    "bg-blue-500": { control: "boolean" },
   },
 } satisfies Meta<typeof Button>;
 
