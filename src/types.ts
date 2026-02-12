@@ -1,9 +1,9 @@
 import type {
-    TailwindClass,
-    TailwindColor,
-    TailwindRadius,
-    TailwindShadow,
-    TailwindSpacing,
+  TailwindClass,
+  TailwindColor,
+  TailwindRadius,
+  TailwindShadow,
+  TailwindSpacing,
 } from "./tailwind.types";
 
 export interface ValueProps {
@@ -278,15 +278,19 @@ export interface ModifierProps {
   print?: ModifierValue;
 }
 
+export type SxProp = Partial<ValueProps & LayoutProps & ModifierProps>;
+
 declare module "react" {
 
   interface HTMLAttributes<T> extends LayoutProps, ValueProps, ModifierProps {
     classNames?: (TailwindClass | string)[];
+    sx?: SxProp;
     [key: string]: any; // Allow for other props including modifiers like hover-bg, data-*, etc.
   }
 
   interface SVGAttributes<T> extends LayoutProps, ValueProps, ModifierProps {
     classNames?: (TailwindClass | string)[];
+    sx?: SxProp;
     [key: string]: any;
   }
 }

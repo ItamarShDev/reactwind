@@ -285,8 +285,12 @@ export const withClassNames = <T extends Record<string, unknown> | null>(props: 
   if (!props) {
     return props;
   }
-  // Debug log to verify runtime is active
-  // console.log("ReactWind Runtime Active", Object.keys(props));
+
+  // 0. Flatten sx prop into props — reuses the entire existing pipeline
+  if ("sx" in props && typeof props.sx === "object" && props.sx !== null) {
+    const { sx, ...restProps } = props;
+    return withClassNames({ ...restProps, ...(sx as Record<string, unknown>) });
+  }
 
   const hasClassNames = "classNames" in props;
   const hasLayoutProps = LAYOUT_PROPS.some((k) => k in props);

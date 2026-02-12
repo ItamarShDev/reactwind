@@ -56,11 +56,15 @@ export interface LayoutProps {
   shrink?: boolean;
 }
 
+export type SxProp = Partial<ValueProps & LayoutProps>;
+
 declare module "react" {
   interface HTMLAttributes<T> extends LayoutProps, ValueProps {
     classNames?: (TailwindClass | string)[];
+    sx?: SxProp;
   }
   interface SVGAttributes<T> extends LayoutProps, ValueProps {
     classNames?: (TailwindClass | string)[];
+    sx?: SxProp;
   }
 }
