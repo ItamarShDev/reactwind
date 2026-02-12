@@ -9,7 +9,7 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant = "default", size = "default", ...props }, ref) => {
+    ({ className, variant = "default", size = "default", ...props }: ButtonProps, ref) => {
         const variantStyles = {
             default: "bg-slate-900 text-slate-50 hover:bg-slate-900/90",
             destructive: "bg-red-500 text-slate-50 hover:bg-red-500/90",
