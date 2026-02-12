@@ -3,7 +3,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Introduction" />
 
-# 🚀 ReactWind
+# ReactWind
 
 ### **Tailwind CSS Shorthands & Array-based ClassNames for React**
 
@@ -11,16 +11,16 @@ ReactWind is a tiny, zero-runtime JSX wrapper that makes styling React component
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-- 📦 **Array-based ClassNames**: No more template literals or `clsx`/`tailwind-merge` boilerplate.
-- ⚡ **Tailwind Shorthands**: Use `flex`, `grid`, `bg="blue-500"`, `p={4}` directly as props.
-- 🚀 **Zero Runtime Overhead**: Compiles away or performs trivial merges at runtime.
-- 🛠 **Fully Typed**: Built with TypeScript for excellent IDE autocompletion.
+- **Array-based ClassNames**: No more template literals or `clsx`/`tailwind-merge` boilerplate.
+- **Tailwind Shorthands**: Use `flex`, `grid`, `bg="blue-500"`, `p={4}` directly as props.
+- **Zero Runtime Overhead**: Compiles away or performs trivial merges at runtime.
+- **Fully Typed**: Built with TypeScript for excellent IDE autocompletion.
 
 ---
 
-## 📦 Installation
+## Installation
 
 ```bash
 npm install @itamarshdev/reactwind
@@ -28,16 +28,15 @@ npm install @itamarshdev/reactwind
 bun add @itamarshdev/reactwind
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
-
-Configure your `vite.config.ts` or `tsconfig.json` to use `reactwind` as your JSX import source:
+Configure your `vite.config.ts` or `tsconfig.json` to use `@itamarshdev/reactwind` as your JSX import source:
 
 ```typescript
 // vite.config.ts
 export default defineConfig({
   esbuild: {
-    jsxImportSource: 'reactwind',
+    jsxImportSource: '@itamarshdev/reactwind',
   },
 });
 ```
@@ -64,7 +63,7 @@ export const SimpleCard = () => (
 
 ---
 
-## 🎯 Goals
+## Goals
 
 1. **Reduce Boilerplate**: Stop writing `className={"..."}` with complex string interpolation.
 
@@ -73,6 +72,9 @@ export const SimpleCard = () => (
 
 ---
 
-## 📖 Explore the Stories
+## Explore the Stories
 
-Check out the sidebar to see ReactWind in action with real-world layouts and components!
+Check out the sidebar to see ReactWind in action:
+- **Layouts**: Professional dashboard and landing page examples.
+- **Composition**: See how ReactWind enhances "Real" Shadcn components.
+- **Showcase**: A full overview of all supported Tailwind properties.
