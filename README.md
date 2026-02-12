@@ -1,8 +1,8 @@
 # 🚀 ReactWind
 
-[![Version](https://img.shields.io/npm/v/reactwind)](https://www.npmjs.com/package/reactwind)
-[![License](https://img.shields.io/npm/l/reactwind)](https://github.com/reactwind/reactwind/blob/main/LICENSE)
-[![Demo](https://img.shields.io/badge/storybook-demo-FF4785?logo=storybook)](https://itamarsharify.github.io/reactwind/storybook/index.html)
+[![Version](https://img.shields.io/npm/v/@itamarshdev/reactwind)](https://www.npmjs.com/package/@itamarshdev/reactwind)
+[![License](https://img.shields.io/npm/l/@itamarshdev/reactwind)](https://github.com/ItamarShDev/reactwind/blob/main/LICENSE)
+[![Demo](https://img.shields.io/badge/storybook-demo-FF4785?logo=storybook)](https://ItamarShDev.github.io/reactwind/storybook/)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 **ReactWind** is a JSX runtime wrapper that brings the power of Tailwind CSS shorthands and array-based classNames directly to your React components. No more template literal spaghetti or complex utility merges.
@@ -33,7 +33,7 @@ yarn add @itamarshdev/reactwind
 
 ## 🛠 Setup
 
-Configure your build tool to use `reactwind` as your JSX import source.
+Configure your build tool to use `@itamarshdev/reactwind` as your JSX import source.
 
 ### Vite
 
@@ -41,7 +41,7 @@ Configure your build tool to use `reactwind` as your JSX import source.
 // vite.config.ts
 export default defineConfig({
   esbuild: {
-    jsxImportSource: 'reactwind',
+    jsxImportSource: '@itamarshdev/reactwind',
   },
 });
 ```
@@ -53,7 +53,7 @@ export default defineConfig({
 {
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "reactwind"
+    "jsxImportSource": "@itamarshdev/reactwind"
   }
 }
 ```
@@ -147,4 +147,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
 
-MIT © [reactwind](https://github.com/reactwind/reactwind)
+MIT © [ItamarShDev](https://github.com/ItamarShDev/reactwind)
