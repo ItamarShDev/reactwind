@@ -5,6 +5,9 @@
 [![Demo](https://img.shields.io/badge/storybook-demo-FF4785?logo=storybook)](https://ItamarShDev.github.io/reactwind/storybook/)
 [![semantic-release](https://img.shields.io/badge/semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
+
+[DeepWiki Docs](https://deepwiki.com/ItamarShDev/reactwind)
+
 **ReactWind** is a JSX runtime wrapper that brings the power of Tailwind CSS shorthands and array-based classNames directly to your React components. No more template literal spaghetti or complex utility merges.
 
 ---
