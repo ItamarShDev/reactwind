@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect } from "storybook/test";
 
 const Button = ({ variant = "default", size = "default", children, ...props }: any) => {
   const variants = {
@@ -180,7 +181,7 @@ export const ShadcnComponents: Story = {
                 <Button size="sm">Small</Button>
                 <Button size="default">Default</Button>
                 <Button size="lg">Large</Button>
-                <Button size="icon">
+                <Button size="icon" aria-label="Icon button">
                   <span text="lg">+</span>
                 </Button>
               </div>
@@ -190,4 +191,16 @@ export const ShadcnComponents: Story = {
       </div>
     </div>
   ),
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole("button", { name: "Small" })).toHaveStyle({
+      height: "36px",
+    });
+    await expect(canvas.getByRole("button", { name: "Large" })).toHaveStyle({
+      height: "44px",
+    });
+    await expect(canvas.getByRole("button", { name: "Icon button" })).toHaveStyle({
+      height: "40px",
+      width: "40px",
+    });
+  },
 };

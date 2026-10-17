@@ -64,6 +64,15 @@ const samples: Record<keyof typeof TAILWIND4_VALUE_PROPS, string | number> = {
 };
 
 describe("Tailwind 4 utilities", () => {
+  it.each(["bg-gradient", "bg-linear"])("compiles the %s gradient shorthand", async (prop) => {
+    const candidate = `${prop}-to-r`;
+    expect(withClassNames({ [prop]: "to-r" })).toEqual({ className: candidate });
+    const compiler = await compile(`${theme}\n@tailwind utilities;`);
+    const css = compiler.build([candidate]);
+    expect(css).toContain(`.${candidate} {`);
+    expect(css).toContain("background-image: linear-gradient(var(--tw-gradient-stops))");
+  });
+
   it.each(MODIFIER_NAMES)("compiles the %s modifier to CSS", async (modifier) => {
     const candidate = `${modifier}:bg-blue-500`;
     expect(withClassNames({ [`${modifier}-bg`]: "blue-500" })).toEqual({ className: candidate });

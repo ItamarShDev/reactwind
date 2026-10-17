@@ -6,6 +6,7 @@ import {
   MODIFIERS,
   HYPHENATED_MODIFIERS,
   BOOLEAN_VALUE_PROPS,
+  JSX_PASSTHROUGH_PROPS,
 } from "./props";
 
 const processModifierObject = (
@@ -142,4 +143,20 @@ export const withClassNames = <T extends Record<string, unknown> | null>(props: 
     ...cleanRest,
     ...(merged ? { className: merged } : {}),
   } as T;
+};
+
+export const withJSXClassNames = (props: Record<string, unknown> | null): any => {
+  if (!props || !JSX_PASSTHROUGH_PROPS.some((key) => key in props)) {
+    return withClassNames(props);
+  }
+
+  const utilityProps = { ...props };
+  const passthroughProps: Record<string, unknown> = {};
+  for (const key of JSX_PASSTHROUGH_PROPS) {
+    if (key in props) {
+      passthroughProps[key] = props[key];
+      delete utilityProps[key];
+    }
+  }
+  return { ...withClassNames(utilityProps), ...passthroughProps };
 };

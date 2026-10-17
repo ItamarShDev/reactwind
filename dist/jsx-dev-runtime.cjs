@@ -100,6 +100,7 @@ var TAILWIND4_VALUE_PROPS = {
 };
 
 // src/props.ts
+var JSX_PASSTHROUGH_PROPS = ["size", "mask", "transform"];
 var LAYOUT_PROPS = [
   "flex",
   "grid",
@@ -447,9 +448,23 @@ var withClassNames = (props) => {
     ...merged ? { className: merged } : {}
   };
 };
+var withJSXClassNames = (props) => {
+  if (!props || !JSX_PASSTHROUGH_PROPS.some((key) => key in props)) {
+    return withClassNames(props);
+  }
+  const utilityProps = { ...props };
+  const passthroughProps = {};
+  for (const key of JSX_PASSTHROUGH_PROPS) {
+    if (key in props) {
+      passthroughProps[key] = props[key];
+      delete utilityProps[key];
+    }
+  }
+  return { ...withClassNames(utilityProps), ...passthroughProps };
+};
 
 // src/jsx-dev-runtime.ts
-var jsxDEV = (type, props, key, isStaticChildren, source, self) => (0, import_jsx_dev_runtime.jsxDEV)(type, withClassNames(props), key, isStaticChildren, source, self);
+var jsxDEV = (type, props, key, isStaticChildren, source, self) => (0, import_jsx_dev_runtime.jsxDEV)(type, withJSXClassNames(props), key, isStaticChildren, source, self);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   Fragment,

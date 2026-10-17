@@ -1,4 +1,4 @@
-import './types-Cmu_U8AD.cjs';
+import './types-CU_TY6ce.cjs';
 import React from 'react';
 export { Fragment } from 'react/jsx-dev-runtime';
 export { JSX } from 'react/jsx-runtime';

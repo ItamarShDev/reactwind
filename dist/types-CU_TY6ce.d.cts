@@ -1,5 +1,6 @@
 type ClassValue = string | false | null | undefined | ClassValue[] | Record<string, boolean | null | undefined>;
 
+declare const JSX_PASSTHROUGH_PROPS: readonly ["size", "mask", "transform"];
 declare const MODIFIER_NAMES: readonly ["hover", "focus", "active", "visited", "disabled", "group-hover", "group-focus", "focus-within", "focus-visible", "target", "first", "last", "only", "odd", "even", "first-of-type", "last-of-type", "only-of-type", "empty", "checked", "indeterminate", "default", "required", "valid", "invalid", "in-range", "out-of-range", "placeholder-shown", "autofill", "read-only", "open", "sm", "md", "lg", "xl", "2xl", "dark", "print", "rtl", "ltr", "motion-safe", "motion-reduce", "starting", "contrast-more", "contrast-less", "forced-colors", "pointer-fine", "pointer-coarse"];
 
 declare const TAILWIND4_VALUE_PROPS: {
@@ -249,13 +250,14 @@ type ModifierProps = {
     [Name in (typeof MODIFIER_NAMES)[number]]?: ModifierValue;
 };
 type SxProp = Partial<ValueProps & LayoutProps & ModifierProps>;
+type JSXValueProps = Omit<ValueProps, (typeof JSX_PASSTHROUGH_PROPS)[number]>;
 declare module "react" {
-    interface HTMLAttributes<T> extends LayoutProps, ValueProps, ModifierProps {
+    interface HTMLAttributes<T> extends LayoutProps, JSXValueProps, ModifierProps {
         classNames?: ClassValue[];
         sx?: SxProp;
         [key: string]: any;
     }
-    interface SVGAttributes<T> extends LayoutProps, ValueProps, ModifierProps {
+    interface SVGAttributes<T> extends LayoutProps, JSXValueProps, ModifierProps {
         classNames?: ClassValue[];
         sx?: SxProp;
         [key: string]: any;

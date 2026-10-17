@@ -178,6 +178,8 @@ export default defineConfig({
 
 ### 5. Gradient & Background Props
 
+Use `bg-linear` for Tailwind 4. The older `bg-gradient` shorthand still passes through to Tailwind 4.3's supported `bg-gradient-*` compatibility utilities; existing gradients do not require translation.
+
 ```tsx
 <div bg-linear="to-r" from="blue-500" via="purple-500" to="pink-500">
   Gradient background
@@ -226,6 +228,18 @@ Literal complete class names in `className`/`classNames` are detected normally. 
 ```
 
 Safelist the complete classes for these examples as described above. Named containers, arbitrary variants, and unsupported utilities can always use literal `classNames` entries.
+
+### Native and component prop collisions
+
+JSX preserves top-level `size`, `mask`, and `transform` as ordinary props so component variants, native input/select sizes, and SVG attributes reach their targets unchanged. Use `sx` for the corresponding Tailwind utilities:
+
+```tsx
+<Button size="sm" sx={{ size: 8 }} />
+<input size={20} sx={{ size: 8 }} />
+<svg mask="url(#shape)" transform="translate(2 3)" sx={{ mask: "none", transform: "3d" }} />
+```
+
+Migration: replace styling-only `<div size={8} transform="3d" />` with `<div sx={{ size: 8, transform: "3d" }} />`. Nested modifier objects and direct `withClassNames()` calls remain explicit styling contexts, so their `size`, `mask`, and `transform` keys still generate classes.
 
 ## Development
 

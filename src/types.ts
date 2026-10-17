@@ -1,5 +1,5 @@
 import type { ClassValue } from "./class-names";
-import type { MODIFIER_NAMES } from "./props";
+import type { MODIFIER_NAMES, JSX_PASSTHROUGH_PROPS } from "./props";
 import type { Tailwind4Props } from "./tailwind4";
 import type {
   TailwindColor,
@@ -269,16 +269,18 @@ export type ModifierProps = {
 
 export type SxProp = Partial<ValueProps & LayoutProps & ModifierProps>;
 
+type JSXValueProps = Omit<ValueProps, (typeof JSX_PASSTHROUGH_PROPS)[number]>;
+
 declare module "react" {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  interface HTMLAttributes<T> extends LayoutProps, ValueProps, ModifierProps {
+  interface HTMLAttributes<T> extends LayoutProps, JSXValueProps, ModifierProps {
     classNames?: ClassValue[];
     sx?: SxProp;
     [key: string]: any; // Allow for other props including modifiers like hover-bg, data-*, etc.
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  interface SVGAttributes<T> extends LayoutProps, ValueProps, ModifierProps {
+  interface SVGAttributes<T> extends LayoutProps, JSXValueProps, ModifierProps {
     classNames?: ClassValue[];
     sx?: SxProp;
     [key: string]: any;

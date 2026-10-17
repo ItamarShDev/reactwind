@@ -1,5 +1,7 @@
 import { TAILWIND4_VALUE_PROPS } from "./tailwind4";
 
+export const JSX_PASSTHROUGH_PROPS = ["size", "mask", "transform"] as const;
+
 export const LAYOUT_PROPS = [
   "flex",
   "grid",

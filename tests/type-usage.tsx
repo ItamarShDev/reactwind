@@ -25,7 +25,21 @@ const modifiers: ModifierProps = {
 const sx: SxProp = { ...utilities, ...modifiers, "@container-size": true };
 
 export const typedElement = <div sx={sx} classNames={classes} />;
-export const typedSvg = <svg sx={{ "text-shadow": "xs" }} classNames={classes} />;
+export const typedSvg = (
+  <svg
+    mask="url(#shape)"
+    transform="translate(2 3)"
+    sx={{ mask: "none", transform: "3d" }}
+    classNames={classes}
+  />
+);
+export const typedInput = <input size={20} sx={{ size: 8 }} />;
+export const typedSelect = <select size={4} sx={{ size: 8 }} />;
+
+// @ts-expect-error Native input size is numeric; styling size belongs in sx.
+export const invalidInput = <input size="sm" />;
+// @ts-expect-error Native SVG transform is a string; numeric utility values belong in sx.
+export const invalidSvg = <svg transform={12} />;
 
 // @ts-expect-error Unknown shorthand utilities are not part of sx.
 const invalidSx: SxProp = { unknownUtility: "value" };
