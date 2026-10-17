@@ -10,20 +10,11 @@
     "skipLibCheck": true,
     "jsx": "react-jsx",
     "types": [],
-    "baseUrl": ".",
     "paths": {
-      "reactwind": [
-        "./src/index.ts"
-      ],
-      "reactwind/jsx-runtime": [
-        "./src/jsx-runtime.ts"
-      ],
-      "reactwind/jsx-dev-runtime": [
-        "./src/jsx-dev-runtime.ts"
-      ]
+      "reactwind": ["./src/index.ts"],
+      "reactwind/jsx-runtime": ["./src/jsx-runtime.ts"],
+      "reactwind/jsx-dev-runtime": ["./src/jsx-dev-runtime.ts"]
     }
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

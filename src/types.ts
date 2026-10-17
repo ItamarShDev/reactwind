@@ -1,12 +1,14 @@
+import type { ClassValue } from "./class-names";
+import type { MODIFIER_NAMES, JSX_PASSTHROUGH_PROPS } from "./props";
+import type { Tailwind4Props } from "./tailwind4";
 import type {
-  TailwindClass,
   TailwindColor,
   TailwindRadius,
   TailwindShadow,
   TailwindSpacing,
 } from "./tailwind.types";
 
-export interface ValueProps {
+export interface ValueProps extends Tailwind4Props {
   bg?: TailwindColor | string;
   text?: TailwindColor | string;
   border?: TailwindColor | string | boolean;
@@ -255,75 +257,31 @@ export interface LayoutProps {
 
   "sr-only"?: boolean;
   "not-sr-only"?: boolean;
+  "@container"?: boolean;
+  "@container-size"?: boolean;
 }
 
-type ModifierValue = Partial<ValueProps & LayoutProps> & {
-  hover?: ModifierValue;
-  focus?: ModifierValue;
-  active?: ModifierValue;
-  visited?: ModifierValue;
-  disabled?: ModifierValue;
-  "group-hover"?: ModifierValue;
-  "group-focus"?: ModifierValue;
-  "focus-within"?: ModifierValue;
-  "focus-visible"?: ModifierValue;
-  first?: ModifierValue;
-  last?: ModifierValue;
-  odd?: ModifierValue;
-  even?: ModifierValue;
-  checked?: ModifierValue;
-  required?: ModifierValue;
-  valid?: ModifierValue;
-  invalid?: ModifierValue;
-  sm?: ModifierValue;
-  md?: ModifierValue;
-  lg?: ModifierValue;
-  xl?: ModifierValue;
-  "2xl"?: ModifierValue;
-  dark?: ModifierValue;
-  print?: ModifierValue;
+type ModifierValue = Partial<ValueProps & LayoutProps> & ModifierProps;
+
+export type ModifierProps = {
+  [Name in (typeof MODIFIER_NAMES)[number]]?: ModifierValue;
 };
-
-export interface ModifierProps {
-  hover?: ModifierValue;
-  focus?: ModifierValue;
-  active?: ModifierValue;
-  visited?: ModifierValue;
-  disabled?: ModifierValue;
-  "group-hover"?: ModifierValue;
-  "group-focus"?: ModifierValue;
-  "focus-within"?: ModifierValue;
-  "focus-visible"?: ModifierValue;
-  first?: ModifierValue;
-  last?: ModifierValue;
-  odd?: ModifierValue;
-  even?: ModifierValue;
-  checked?: ModifierValue;
-  required?: ModifierValue;
-  valid?: ModifierValue;
-  invalid?: ModifierValue;
-  sm?: ModifierValue;
-  md?: ModifierValue;
-  lg?: ModifierValue;
-  xl?: ModifierValue;
-  "2xl"?: ModifierValue;
-  dark?: ModifierValue;
-  print?: ModifierValue;
-}
 
 export type SxProp = Partial<ValueProps & LayoutProps & ModifierProps>;
 
+type JSXValueProps = Omit<ValueProps, (typeof JSX_PASSTHROUGH_PROPS)[number]>;
+
 declare module "react" {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  interface HTMLAttributes<T> extends LayoutProps, ValueProps, ModifierProps {
-    classNames?: (TailwindClass | string)[];
+  interface HTMLAttributes<T> extends LayoutProps, JSXValueProps, ModifierProps {
+    classNames?: ClassValue[];
     sx?: SxProp;
     [key: string]: any; // Allow for other props including modifiers like hover-bg, data-*, etc.
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  interface SVGAttributes<T> extends LayoutProps, ValueProps, ModifierProps {
-    classNames?: (TailwindClass | string)[];
+  interface SVGAttributes<T> extends LayoutProps, JSXValueProps, ModifierProps {
+    classNames?: ClassValue[];
     sx?: SxProp;
     [key: string]: any;
   }

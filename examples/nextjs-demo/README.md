@@ -2,17 +2,21 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+Build the local ReactWind package from the repository root:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun install --frozen-lockfile
+bun run build
 ```
+
+Then, from `examples/nextjs-demo`, install and run the demo:
+
+```bash
+npm install
+npm run dev
+```
+
+Use npm for this standalone example: it links the parent package instead of copying the repository recursively. The demo uses the local build, not an older published ReactWind version. Tailwind shorthand classes are explicitly included with `@source inline()` in `app/globals.css`.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

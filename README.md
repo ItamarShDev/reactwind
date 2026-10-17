@@ -26,8 +26,9 @@ yarn add @itamarshdev/reactwind
 ## Features
 
 - **Prop-based Styling**: Use Tailwind utilities as props: `<div flex bg="blue-500" p={4} />`.
-- **Array ClassNames**: Pass classes as clean arrays: `classNames={['text-center', isActive && 'font-bold']}`.
-- **Zero Runtime (Concept)**: Designed for minimal overhead. Most transformations happen at the JSX level.
+- **Conditional ClassNames**: Compose strings, nested arrays, and conditional object maps without another dependency.
+- **Lightweight Runtime**: Shorthands are converted to class strings at runtime; this is not a compile-time CSS extractor.
+- **Tailwind 4.3 Utilities**: Logical spacing, text shadows, masks, 3D transforms, scrollbars, and zoom.
 - **TypeScript First**: Automatic types for nearly all Tailwind utilities.
 - **Framework Agnostic**: Works with Vite, Next.js, and any stack supporting custom JSX runtimes.
 
@@ -42,12 +43,16 @@ Configure your build tool to use `@itamarshdev/reactwind` as your JSX import sou
 
 ```typescript
 // vite.config.ts
+import { defineConfig } from 'vite';
+import tailwindcss from '@tailwindcss/vite';
+
 export default defineConfig({
-  esbuild: {
-    jsxImportSource: '@itamarshdev/reactwind',
-  },
+  plugins: [tailwindcss()],
+  oxc: { jsx: { importSource: '@itamarshdev/reactwind' } },
 });
 ```
+
+This uses Vite 8. For Vite 7 and earlier, use `esbuild: { jsxImportSource: '@itamarshdev/reactwind' }` instead of `oxc`.
 
 ### TypeScript
 
@@ -77,21 +82,17 @@ Next.js uses SWC which reads from your `tsconfig.json`:
 
 ### TanStack Start
 
-TanStack Start uses Vinxi (built on Vite). Configure via `app.config.ts`:
+Current TanStack Start uses Vite. Configure `vite.config.ts`:
 
 ```typescript
-// app.config.ts
-import { defineConfig } from "@tanstack/react-start/config";
+// vite.config.ts
+import { defineConfig } from "vite";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  tsr: {
-    // your TanStack Router options
-  },
-  vite: {
-    esbuild: {
-      jsxImportSource: "@itamarshdev/reactwind",
-    },
-  },
+  plugins: [tailwindcss(), tanstackStart(), react({ jsxImportSource: "@itamarshdev/reactwind" })],
 });
 ```
 
@@ -106,9 +107,7 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [reactRouter()],
-  esbuild: {
-    jsxImportSource: "@itamarshdev/reactwind",
-  },
+  oxc: { jsx: { importSource: "@itamarshdev/reactwind" } },
 });
 ```
 
@@ -133,7 +132,8 @@ export default defineConfig({
   classNames={[
     'transition-all duration-300',
     isHovered ? 'scale-105 shadow-lg' : 'scale-100 shadow-sm',
-    customClass && customClass
+    customClass && customClass,
+    ['rounded-lg', { 'font-bold': isActive, 'opacity-50': isDisabled }],
   ]}
 >
   Card Content
@@ -178,13 +178,91 @@ export default defineConfig({
 
 ### 5. Gradient & Background Props
 
+Use `bg-linear` for Tailwind 4. The older `bg-gradient` shorthand still passes through to Tailwind 4.3's supported `bg-gradient-*` compatibility utilities; existing gradients do not require translation.
+
 ```tsx
-<div bg-gradient="to-r" from="blue-500" via="purple-500" to="pink-500">
+<div bg-linear="to-r" from="blue-500" via="purple-500" to="pink-500">
   Gradient background
 </div>
 ```
 
 ---
+
+## Tailwind CSS source detection
+
+ReactWind generates class strings at runtime; Tailwind generates CSS at build time. Tailwind cannot infer `bg-blue-500` from `bg="blue-500"`, including inside `sx` and modifier objects.
+
+Install Tailwind and its integration separately. In your CSS, import Tailwind and explicitly include the complete class names used by shorthand props:
+
+```css
+@import "tailwindcss";
+
+@source inline("flex items-center justify-between p-4 bg-blue-500 hover:bg-blue-700");
+```
+
+Use `@source inline()` brace expansion for a bounded set of dynamic values, not the entire Tailwind palette:
+
+```css
+@source inline("{hover:,focus:,}bg-{blue,sky}-{500,700}");
+```
+
+Literal complete class names in `className`/`classNames` are detected normally. `@source` paths can include external component files with literal classes, but cannot extract shorthand prop values. See [Tailwind's source detection guide](https://tailwindcss.com/docs/detecting-classes-in-source-files).
+
+## Tailwind 4 utilities
+
+```tsx
+<div
+  ps={6} pe={4} pbs={4} pbe={4}
+  text-shadow="sm"
+  scrollbar="thin" scrollbar-thumb="sky-500" scrollbar-gutter="stable"
+  zoom={125}
+  motion-safe={{ hover: { "rotate-y": 12 } }}
+  rtl={{ ps: 8 }}
+>
+  Logical spacing, scrollbars, text shadows, and 3D transforms
+</div>
+
+<div sx={{ "@container-size": true }}>
+  <p classNames={["@sm:text-lg"]}>Container-query content</p>
+</div>
+```
+
+Safelist the complete classes for these examples as described above. Named containers, arbitrary variants, and unsupported utilities can always use literal `classNames` entries.
+
+### Native and component prop collisions
+
+JSX preserves top-level `size`, `mask`, and `transform` as ordinary props so component variants, native input/select sizes, and SVG attributes reach their targets unchanged. Use `sx` for the corresponding Tailwind utilities:
+
+```tsx
+<Button size="sm" sx={{ size: 8 }} />
+<input size={20} sx={{ size: 8 }} />
+<svg mask="url(#shape)" transform="translate(2 3)" sx={{ mask: "none", transform: "3d" }} />
+```
+
+Migration: replace styling-only `<div size={8} transform="3d" />` with `<div sx={{ size: 8, transform: "3d" }} />`. Nested modifier objects and direct `withClassNames()` calls remain explicit styling contexts, so their `size`, `mask`, and `transform` keys still generate classes.
+
+## Development
+
+Use Bun 1.4.3 and Node 22.22.2+ (CI uses Node 24):
+
+```bash
+bun install --frozen-lockfile
+bun run lint
+bun run check
+bun run typecheck
+bun run test:types
+bun run test
+bun run build
+bun run build-storybook
+```
+
+Optional browser-backed Storybook tests: `bunx playwright install chromium`, then `bun run test:storybook`. Regenerate utility suggestions with `bun run generate:types`, then `bun run format`.
+
+## Potential next features
+
+1. **Build-time extraction**: A Vite/SWC transform that emits static classes from literal shorthand props, removing manual safelists and reducing runtime work.
+2. **Custom utility and variant registry**: Typed support for project theme extensions, named containers, `data-*`, and arbitrary variants.
+3. **Opt-in conflict resolution**: A Tailwind-aware merge mode for reusable component overrides, while keeping the default runtime dependency-free.
 
 ## Goals
 

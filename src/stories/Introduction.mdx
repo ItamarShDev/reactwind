@@ -6,7 +6,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 ### **Tailwind CSS Shorthands & Array-based ClassNames for React**
 
-ReactWind is a tiny, zero-runtime JSX wrapper that makes styling React components faster and more organized. It allows you to use Tailwind shorthands as props and pass classNames as clean arrays.
+ReactWind is a lightweight JSX runtime wrapper that makes styling React components faster and more organized. It allows you to use Tailwind shorthands as props and compose strings, nested arrays, and conditional class maps.
 
 ---
 
@@ -14,7 +14,7 @@ ReactWind is a tiny, zero-runtime JSX wrapper that makes styling React component
 
 - **Array-based ClassNames**: No more template literals or `clsx`/`tailwind-merge` boilerplate.
 - **Tailwind Shorthands**: Use `flex`, `grid`, `bg="blue-500"`, `p={4}` directly as props.
-- **Zero Runtime Overhead**: Compiles away or performs trivial merges at runtime.
+- **Lightweight Runtime**: Converts shorthand props into class strings at runtime, without extra runtime dependencies.
 - **Fully Typed**: Built with TypeScript for excellent IDE autocompletion.
 
 ---
@@ -34,10 +34,17 @@ Configure your `vite.config.ts` or `tsconfig.json` to use `@itamarshdev/reactwin
 ```typescript
 // vite.config.ts
 export default defineConfig({
-  esbuild: {
-    jsxImportSource: "@itamarshdev/reactwind",
-  },
+  oxc: { jsx: { importSource: "@itamarshdev/reactwind" } },
 });
+```
+
+For Vite 7 and earlier, use `esbuild: { jsxImportSource: "@itamarshdev/reactwind" }` instead. Install Tailwind and the appropriate Vite or PostCSS integration separately.
+
+Tailwind cannot detect classes assembled from shorthand props. Include complete class names in your stylesheet:
+
+```css
+@import "tailwindcss";
+@source inline("bg-white shadow rounded-lg p-6 flex flex-col items-center text-xl font-bold mb-2 text-gray-600");
 ```
 
 Now you can use ReactWind props on any HTML element:
