@@ -1,46 +1,42 @@
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
+import { playwright } from "@vitest/browser-playwright";
+import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
 
-const srcFile = (relativePath: string) =>
-  fileURLToPath(new URL(relativePath, import.meta.url));
+const srcFile = (relativePath: string) => fileURLToPath(new URL(relativePath, import.meta.url));
 
 export default defineConfig({
-  esbuild: {
-    jsxImportSource: "reactwind",
-  },
-  plugins: [],
-
+  oxc: { jsx: { importSource: "reactwind" } },
   resolve: {
     alias: [
-      {
-        find: /^react-jsx-classnames$/,
-        replacement: srcFile("./src/index.ts"),
-      },
-      {
-        find: /^react-jsx-classnames\/jsx-runtime$/,
-        replacement: srcFile("./src/jsx-runtime.ts"),
-      },
-      {
-        find: /^react-jsx-classnames\/jsx-dev-runtime$/,
-        replacement: srcFile("./src/jsx-dev-runtime.ts"),
-      },
-      {
-        find: /^reactwind$/,
-        replacement: srcFile("./src/index.ts"),
-      },
-      {
-        find: /^reactwind\/jsx-runtime$/,
-        replacement: srcFile("./src/jsx-runtime.ts"),
-      },
-      {
-        find: /^reactwind\/jsx-dev-runtime$/,
-        replacement: srcFile("./src/jsx-dev-runtime.ts"),
-      },
+      { find: /^reactwind\/jsx-runtime$/, replacement: srcFile("./src/jsx-runtime.ts") },
+      { find: /^reactwind\/jsx-dev-runtime$/, replacement: srcFile("./src/jsx-dev-runtime.ts") },
+      { find: /^reactwind$/, replacement: srcFile("./src/index.ts") },
     ],
   },
   test: {
-    environment: "happy-dom",
-    include: ["tests/**/*.test.ts", "tests/**/*.test.tsx"],
-    setupFiles: [],
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: "unit",
+          environment: "happy-dom",
+          include: ["tests/**/*.test.ts", "tests/**/*.test.tsx"],
+        },
+      },
+      {
+        extends: true,
+        plugins: [storybookTest({ configDir: srcFile("./.storybook") })],
+        test: {
+          name: "storybook",
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: playwright(),
+            instances: [{ browser: "chromium" }],
+          },
+        },
+      },
+    ],
   },
 });
