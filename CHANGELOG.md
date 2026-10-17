@@ -1,3 +1,16 @@
+# [1.3.0](https://github.com/ItamarShDev/reactwind/compare/v1.2.2...v1.3.0) (2026-10-17)
+
+
+### Bug Fixes
+
+* include cross-platform binaries in example lockfile ([8f7dc90](https://github.com/ItamarShDev/reactwind/commit/8f7dc908a41ba06c3feb325b3833fe70b41a74d7))
+* preserve native and component props in JSX ([0131fcf](https://github.com/ItamarShDev/reactwind/commit/0131fcf8103480a65b114f0d8d1bb27b9678729b))
+
+
+### Features
+
+* align with Tailwind CSS 4.3 and refresh dependencies ([9d0899b](https://github.com/ItamarShDev/reactwind/commit/9d0899bb57ab2a1b5a0109ff6df1602e60f6a297))
+
 ## [1.2.2](https://github.com/ItamarShDev/reactwind/compare/v1.2.1...v1.2.2) (2026-02-12)
 
 
